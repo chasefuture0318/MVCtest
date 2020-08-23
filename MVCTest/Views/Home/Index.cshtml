@@ -1,35 +1,36 @@
-﻿@{
+﻿@using MVCTest.Models;
+@{
     ViewBag.Title = "Home Page";
     Layout = null;
 
-    var list = ViewBag.List;
+    List<Order> Orders = ViewBag.List;
 }
 
 @Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/modernizr")
 
 
-    <div>
-        <button class="btn btn-success btn-sm" type="button" onclick="RefreshClick()" value="Search">刷新查詢</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>訂單編號</th>
+            <th>顧客名稱</th>
+        </tr>
+    </thead>
+    <tbody>
 
-        <hr />
-    </div>
+        @foreach (Order order in Orders)
+        {
+            <tr>
+                <th>@order.OrderID</th>
+                <th>@order.CustomerID</th>
+                <th>
+            </tr>
+        }
 
+    </tbody>
+</table>
 
-<div>
-    @for (int i = 0; i < list.Count; i++)
-    {
-        @Html.Raw($"訂單代號: {list[i].OrderID}, 客戶名稱: {list[i].CustomerID}")
-        <br />
-    }
-</div>
-
-<script language="javascript" type="text/javascript">
-
-    function RefreshClick() {
-        location.reload();
-    }
-
-
-
-</script>
+<p>
+    @Html.ActionLink("新增資料", "InsertData")
+</p>

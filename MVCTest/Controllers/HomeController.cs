@@ -42,5 +42,26 @@ From	Orders";
             ViewBag.List = list;
             return View();
         }
+
+        /// <summary>
+        /// InsertData
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult InsertData()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        /// <summary>
+        /// InsertData
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult InsertData(Order order)
+        {
+            DBmanager dBmanager = new DBmanager();
+            dBmanager.InsertOrder(order);
+            return RedirectToAction("Index");
+        }
     }
 }
