@@ -24,6 +24,7 @@
             <tr>
                 <th>@order.OrderID</th>
                 <th>@order.CustomerID</th>
+                <th>@Html.ActionLink("編輯", "UpdateData", new { OrderID = order.OrderID } )</th>
                 <th>
             </tr>
         }

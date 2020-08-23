@@ -30,7 +30,8 @@ From	Orders";
                 while (dr.Read())
                 {
                     Order order = new Order();
-                    order.OrderID = dr["OrderID"].ToString();
+                    int.TryParse(dr["OrderID"].ToString(), out int orderID);
+                    order.OrderID = orderID;
                     order.CustomerID = dr["CustomerID"].ToString();
                     list.Add(order);
                 }
@@ -61,6 +62,30 @@ From	Orders";
         {
             DBmanager dBmanager = new DBmanager();
             dBmanager.InsertOrder(order);
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// UpdateData
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UpdateData(int OrderID)
+        {
+            Console.WriteLine(OrderID.ToString());
+            DBmanager dBmanager = new DBmanager();
+            Order order = dBmanager.GetOrder(OrderID);
+            return View(order);
+        }
+
+        [HttpPost]
+        /// <summary>
+        /// UpdateData
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UpdateData(Order order)
+        {
+            DBmanager dBmanager = new DBmanager();
+            dBmanager.UpdateOrder(order);
             return RedirectToAction("Index");
         }
     }
