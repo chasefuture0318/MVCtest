@@ -1,5 +1,8 @@
-﻿using System;
+﻿using MVCTest.Models;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,22 +11,35 @@ namespace MVCTest.Controllers
 {
     public class HomeController : Controller
     {
+        string connString = @"server=CHASE\SQLEXPRESS;uid=sa;pwd=123456;database=NORTHWND;Min Pool Size=50;Pooling=false;Enlist=false";
+        SqlConnection conn = new SqlConnection();
+
+        //SearchData
         public ActionResult Index()
         {
-            return View();
-        }
+            conn.ConnectionString = connString;
+            string sql = @" 
+Select	OrderID, CustomerID, OrderDate
+From	Orders";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            List<Order> list = new List<Order>();
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+            using (SqlDataReader dr = cmd.ExecuteReader())
+            {
+                while (dr.Read())
+                {
+                    Order order = new Order();
+                    order.OrderID = dr["OrderID"].ToString();
+                    order.CustomerID = dr["CustomerID"].ToString();
+                    list.Add(order);
+                }
+            }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            if (conn.State != ConnectionState.Closed)
+                conn.Close();
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.List = list;
             return View();
         }
     }
