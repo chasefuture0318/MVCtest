@@ -71,7 +71,6 @@ From	Orders";
         /// <returns></returns>
         public ActionResult UpdateData(int OrderID)
         {
-            Console.WriteLine(OrderID.ToString());
             DBmanager dBmanager = new DBmanager();
             Order order = dBmanager.GetOrder(OrderID);
             return View(order);
@@ -86,6 +85,17 @@ From	Orders";
         {
             DBmanager dBmanager = new DBmanager();
             dBmanager.UpdateOrder(order);
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// DeleteData
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteData(int OrderID)
+        {
+            DBmanager dBmanager = new DBmanager();
+            dBmanager.DeleteOrder(OrderID);
             return RedirectToAction("Index");
         }
     }

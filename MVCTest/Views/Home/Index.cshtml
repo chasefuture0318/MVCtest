@@ -21,12 +21,14 @@
 
         @foreach (Order order in Orders)
         {
-            <tr>
-                <th>@order.OrderID</th>
-                <th>@order.CustomerID</th>
-                <th>@Html.ActionLink("編輯", "UpdateData", new { OrderID = order.OrderID } )</th>
-                <th>
-            </tr>
+        <tr>
+            <th>@order.OrderID</th>
+            <th>@order.CustomerID</th>
+            <th>@Html.ActionLink("編輯", "UpdateData", new { OrderID = order.OrderID })
+                |
+                @Html.ActionLink("刪除", "DeleteData", new { OrderID = order.OrderID })</th>
+            <th>
+        </tr>
         }
 
     </tbody>

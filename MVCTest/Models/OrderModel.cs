@@ -64,5 +64,16 @@ namespace MVCTest.Models
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
         }
+        public void DeleteOrder(int OrderID)
+        {
+            SqlConnection sqlConnection = new SqlConnection(ConnStr);
+            SqlCommand sqlCommand = new SqlCommand(@"   Delete Orders
+                                                        Where OrderID = @OrderID ");
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.Parameters.Add(new SqlParameter("@OrderID", OrderID));
+            sqlConnection.Open();
+            sqlCommand.ExecuteNonQuery();
+            sqlConnection.Close();
+        }
     }
 }
